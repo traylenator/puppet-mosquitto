@@ -38,8 +38,8 @@ class mosquitto::server (
   }
 
   exec {'passwd_file':
-    command => "/usr/bin/mosquitto_passwd -b /etc/mosquitto/infra_service.pw ${infra_service_username} ${infra_service_password}",
-    require => File['/etc/mosquitto/infra_service.pw']
+    command => shell_join(['/usr/bin/mosquitto_passwd', '-b', '/etc/mosquitto/infra_service.pw', $infra_service_username, $infra_service_password]),
+    require => File['/etc/mosquitto/infra_service.pw'],
   }
 
   file {'/etc/mosquitto/infra_service.acl':
